@@ -41,7 +41,12 @@ export const ListItem: React.FC<{}> = ({ children }) => {
   return <li className="list-item">{children}</li>
 }
 
-export const Button: React.FC<{ label: string; type?: 'button' | 'submit' }> =
-  ({ label }) => {
-    return <button className="button">{label}</button>
-  }
+export const Button: React.FC<{
+  label: string
+  style?: 'secondary'
+  type?: 'button' | 'submit'
+}> = ({ label, style }) => {
+  return (
+    <button className={`button ${style ? `mod-${style}` : ''}`}>{label}</button>
+  )
+}

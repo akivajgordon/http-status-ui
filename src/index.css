@@ -67,6 +67,11 @@ a {
   width: 100%;
 }
 
+.button.mod-secondary {
+  background-color: hsla(0, 0%, 0%, 0.1);
+  color: #469ff8;
+}
+
 .input {
   background: hsla(0, 0%, 0%, 0.1);
   border: none;
