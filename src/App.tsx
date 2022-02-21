@@ -11,16 +11,18 @@ import Results from './results'
 
 function App() {
   return (
-    <PageWrap>
-      <Results />
-      <VoteRoundWait />
-      <VoteRound />
-      <AssignRoundWait />
-      <AssignRound />
-      <Lobby />
-      <CreateGame />
-      <Invite />
-    </PageWrap>
+    <div style={{ margin: '3rem auto', fontSize: '1em' }}>
+      <PageWrap>
+        <Results />
+        <VoteRoundWait />
+        <VoteRound />
+        <AssignRoundWait />
+        <AssignRound />
+        <Lobby />
+        <CreateGame />
+        <Invite />
+      </PageWrap>
+    </div>
   )
 }
 

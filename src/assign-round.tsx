@@ -15,6 +15,7 @@ const Player: React.FC<{ id: string; name: string }> = ({ name }) => {
         padding: '1em',
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
       }}
     >
       <div>
@@ -30,7 +31,7 @@ const Player: React.FC<{ id: string; name: string }> = ({ name }) => {
         </span>
         <span>{name}</span>
       </div>
-      <select style={{ maxWidth: '30ch' }}>
+      <select style={{ fontSize: '16px', maxWidth: '22ch' }}>
         {statuses.map((status) => (
           <option
             key={status.id}
