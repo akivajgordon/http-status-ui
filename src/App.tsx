@@ -1,6 +1,7 @@
 import './App.css'
 import Invite from './invite'
 import CreateGame from './create-game'
+import JoinGame from './join'
 import { PageWrap } from './utils'
 import Lobby from './lobby'
 import AssignRound from './assign-round'
@@ -13,7 +14,8 @@ function App() {
   return (
     <div style={{ margin: '3rem auto', fontSize: '1em' }}>
       <PageWrap>
-        <CreateGame />
+        <JoinGame />
+        {/* <CreateGame /> */}
         {/* <Results /> */}
         {/* <VoteRoundWait /> */}
         {/* <VoteRound /> */}
