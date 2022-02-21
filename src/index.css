@@ -72,6 +72,12 @@ a {
   color: #469ff8;
 }
 
+@media (prefers-color-scheme: dark) {
+  .button.mod-secondary {
+    background-color: hsla(0, 0%, 100%, 0.1);
+  }
+}
+
 .input {
   background: hsla(0, 0%, 0%, 0.1);
   border: none;
@@ -89,7 +95,7 @@ a {
 
 .list {
   padding: 0;
-  background: hsla(0, 0%, 0%, 0.1);
+  background: hsla(0, 0%, 0%, 0.05);
   border-radius: 14px;
   list-style: none;
   overflow: hidden;
@@ -129,5 +135,19 @@ a {
 @media (prefers-color-scheme: dark) {
   .silhouette-icon {
     filter: contrast(0) brightness(40%);
+  }
+}
+
+.typography.mod-small {
+  font-size: 0.8em;
+}
+
+.typography.mod-muted {
+  color: hsla(0, 0%, 0%, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  .typography.mod-muted {
+    color: hsla(0, 0%, 100%, 0.5);
   }
 }

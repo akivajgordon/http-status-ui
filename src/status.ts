@@ -1,4 +1,9 @@
-export const statuses = [
+interface Status {
+  id: number
+  label: string
+}
+
+export const statuses: Status[] = [
   { id: 100, label: 'Continue' },
   { id: 101, label: 'Switching Protocols' },
   { id: 102, label: 'Processing' },
@@ -63,3 +68,11 @@ export const statuses = [
   { id: 511, label: 'Network Authentication Required' },
   { id: 599, label: 'Network Connect Timeout Error' },
 ]
+
+export const labelForStatus = (status: number) => {
+  const found = statuses.find((s) => s.id === status)
+
+  if (!found) return 'N/A'
+
+  return `${found.id} – ${found.label}`
+}

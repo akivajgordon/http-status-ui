@@ -7,10 +7,12 @@ import AssignRound from './assign-round'
 import AssignRoundWait from './assign-round-wait'
 import VoteRound from './vote-round'
 import VoteRoundWait from './vote-round-wait'
+import Results from './results'
 
 function App() {
   return (
     <PageWrap>
+      <Results />
       <VoteRoundWait />
       <VoteRound />
       <AssignRoundWait />
