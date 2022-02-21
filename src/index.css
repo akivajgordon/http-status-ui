@@ -21,6 +21,10 @@ body {
   }
 }
 
+a {
+  color: dodgerblue;
+}
+
 .centered {
   display: flex;
   justify-content: center;
