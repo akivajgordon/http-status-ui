@@ -6,10 +6,12 @@ import Lobby from './lobby'
 import AssignRound from './assign-round'
 import AssignRoundWait from './assign-round-wait'
 import VoteRound from './vote-round'
+import VoteRoundWait from './vote-round-wait'
 
 function App() {
   return (
     <PageWrap>
+      <VoteRoundWait />
       <VoteRound />
       <AssignRoundWait />
       <AssignRound />
