@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import Invite from './invite'
+import CreateGame from './create-game'
+import { PageWrap } from './utils'
+import Lobby from './lobby'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <PageWrap>
+      <Lobby />
+      <CreateGame />
+      <Invite />
+    </PageWrap>
+  )
 }
 
-export default App;
+export default App
