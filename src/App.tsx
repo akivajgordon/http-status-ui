@@ -13,14 +13,14 @@ function App() {
   return (
     <div style={{ margin: '3rem auto', fontSize: '1em' }}>
       <PageWrap>
-        <Results />
-        <VoteRoundWait />
-        <VoteRound />
-        <AssignRoundWait />
-        <AssignRound />
-        <Lobby />
         <CreateGame />
-        <Invite />
+        {/* <Results /> */}
+        {/* <VoteRoundWait /> */}
+        {/* <VoteRound /> */}
+        {/* <AssignRoundWait /> */}
+        {/* <AssignRound /> */}
+        {/* <Lobby /> */}
+        {/* <Invite /> */}
       </PageWrap>
     </div>
   )

@@ -1,5 +1,13 @@
-import { Button, Heading, List, ListItem, Paragraph, Stack } from './utils'
-import { statuses } from './status'
+import {
+  Button,
+  Heading,
+  List,
+  ListItem,
+  Paragraph,
+  Select,
+  Stack,
+} from './utils'
+import { labelForStatus, statuses } from './status'
 
 const opponents = [
   { id: '13t3ito', name: 'Akiva' },
@@ -31,14 +39,15 @@ const Player: React.FC<{ id: string; name: string }> = ({ name }) => {
         </span>
         <span>{name}</span>
       </div>
-      <select style={{ fontSize: '16px', maxWidth: '22ch' }}>
-        {statuses.map((status) => (
-          <option
-            key={status.id}
-            value={status.id}
-          >{`${status.id} – ${status.label}`}</option>
-        ))}
-      </select>
+      <div style={{ maxWidth: '22ch' }}>
+        <Select
+          instructions="Choose status"
+          options={statuses.map((s) => ({
+            id: s.id,
+            label: labelForStatus(s.id),
+          }))}
+        />
+      </div>
     </div>
   )
 }

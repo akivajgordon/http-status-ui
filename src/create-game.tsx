@@ -1,8 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Stack, Heading, Paragraph, Button, Input, Centered } from './utils'
 
 export default () => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [hostName, setHostName] = useState('')
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [inputRef.current])
 
   return (
     <Stack>
@@ -15,6 +22,7 @@ export default () => {
           <Stack>
             <div>
               <Input
+                ref={inputRef}
                 placeholder="Host name"
                 value={hostName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

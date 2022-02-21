@@ -1,3 +1,5 @@
+import React, { Key } from 'react'
+
 export const Stack: React.FC<{ size?: 'small' }> = ({ size, children }) => {
   return <div className={`stack ${size ? `mod-${size}` : ''}`}>{children}</div>
 }
@@ -29,9 +31,12 @@ export const IconButton: React.FC<{ icon: string; label: string }> = ({
   )
 }
 
-export const Input = (props: React.HTMLProps<HTMLInputElement>) => {
-  return <input className="input" {...props} />
-}
+export const Input = React.forwardRef<
+  HTMLInputElement,
+  React.HTMLProps<HTMLInputElement>
+>((props, ref) => {
+  return <input ref={ref} className="input" {...props} />
+})
 
 export const List: React.FC<{}> = ({ children }) => {
   return <ul className="list">{children}</ul>
@@ -48,5 +53,28 @@ export const Button: React.FC<{
 }> = ({ label, style }) => {
   return (
     <button className={`button ${style ? `mod-${style}` : ''}`}>{label}</button>
+  )
+}
+
+interface Option {
+  id: Key
+  label: string
+}
+
+export const Select: React.FC<{
+  instructions: string
+  options: Option[]
+}> = ({ instructions, options }) => {
+  return (
+    <select style={{ fontSize: '16px', maxWidth: '100%' }}>
+      <option disabled hidden>
+        {instructions}
+      </option>
+      {options.map((option) => (
+        <option key={option.id} value={option.id}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   )
 }
