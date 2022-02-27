@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { postJSON } from './api'
 import { Stack, Heading, Paragraph, Button, Input, Centered } from './utils'
 
 const HOST = 'Akiva'
@@ -6,12 +8,19 @@ const HOST = 'Akiva'
 export default () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
+  const { id } = useParams()
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [inputRef.current])
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    await postJSON(`/join/${id}`, { name })
+  }
 
   return (
     <Stack>
@@ -23,7 +32,7 @@ export default () => {
         </Paragraph>
       </Stack>
       <Centered>
-        <form style={{ maxWidth: '35ch', width: '100%' }}>
+        <form style={{ maxWidth: '35ch', width: '100%' }} onSubmit={onSubmit}>
           <Stack>
             <div>
               <Input

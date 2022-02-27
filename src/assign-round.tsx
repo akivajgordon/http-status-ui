@@ -8,13 +8,7 @@ import {
   Stack,
 } from './utils'
 import { labelForStatus, statuses } from './status'
-
-const opponents = [
-  { id: '13t3ito', name: 'Akiva' },
-  { id: '1p3itjo', name: 'Joe' },
-  { id: 'alkjszi', name: 'Dan' },
-  { id: 'joivkml', name: 'Adrienne' },
-]
+import { useGameState } from './game-state'
 
 const Player: React.FC<{ id: string; name: string }> = ({ name }) => {
   return (
@@ -53,6 +47,9 @@ const Player: React.FC<{ id: string; name: string }> = ({ name }) => {
 }
 
 export default () => {
+  const { gameState } = useGameState()
+
+  const opponents: { id: string; name: string }[] = []
   return (
     <Stack>
       <Heading>Round 1</Heading>

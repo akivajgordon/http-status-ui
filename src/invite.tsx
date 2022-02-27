@@ -1,3 +1,6 @@
+import { useParams } from 'react-router-dom'
+import { postJSON } from './api'
+import { useGameState } from './game-state'
 import {
   Stack,
   Heading,
@@ -11,14 +14,17 @@ import {
 
 const SHARE_ICON = 'share'
 
-const joinedPlayers = [
-  { id: '13t3ito', name: 'Akiva' },
-  { id: '1p3itjo', name: 'Joe' },
-  { id: 'alkjszi', name: 'Dan' },
-  { id: 'joivkml', name: 'Adrienne' },
-]
-
 export default () => {
+  const { id } = useParams()
+  const { gameState } = useGameState()
+  const { joinedPlayers } = gameState
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    await postJSON(`/start/${id}`, {})
+  }
+
   return (
     <Stack>
       <Stack size="small">
@@ -37,7 +43,9 @@ export default () => {
           })}
         </List>
         <Centered>
-          <Button label="Everyone's here, let's go!" />
+          <form onSubmit={onSubmit}>
+            <Button type="submit" label="Everyone's here, let's go!" />
+          </form>
         </Centered>
       </Stack>
     </Stack>
