@@ -4,27 +4,35 @@ import { useParams } from 'react-router-dom'
 interface Player {
   id: string
   name: string
+  completed: boolean
 }
 
 export enum GameStatus {
   Created = 'created',
   Round1 = 'round-1',
+  Round2 = 'round-2',
+  Finished = 'finished',
 }
 
 interface GameState {
   isHost: boolean
-  playerId: string | null
-  joinedPlayers: Player[]
+  joined: boolean
+  players: Player[]
   gameStatus: GameStatus
 }
 
-export const useGameState = () => {
-  const [gameState, setGameState] = useState<GameState>({
+export interface Round1 extends GameState {
+  opponents: Player[]
+}
+
+export const useGameState = <T extends Round1 | GameState = GameState>() => {
+  const [gameState, setGameState] = useState<T>({
     isHost: false,
-    playerId: null,
-    joinedPlayers: [],
+    joined: false,
+    players: [],
     gameStatus: GameStatus.Created,
-  })
+    opponents: [],
+  } as unknown as T)
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
 

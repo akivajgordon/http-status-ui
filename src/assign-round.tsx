@@ -1,55 +1,27 @@
-import {
-  Button,
-  Heading,
-  List,
-  ListItem,
-  Paragraph,
-  Select,
-  Stack,
-} from './utils'
-import { labelForStatus, statuses } from './status'
-import { useGameState } from './game-state'
-
-const Player: React.FC<{ id: string; name: string }> = ({ name }) => {
-  return (
-    <div
-      style={{
-        padding: '1em',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      <div>
-        <span
-          style={{
-            width: '50px',
-            marginRight: '1em',
-            color: '#61D836',
-            fontWeight: 'bold',
-          }}
-        >
-          ✓
-        </span>
-        <span>{name}</span>
-      </div>
-      <div style={{ maxWidth: '22ch' }}>
-        <Select
-          instructions="Choose status"
-          options={statuses.map((s) => ({
-            id: s.id,
-            label: labelForStatus(s.id),
-          }))}
-        />
-      </div>
-    </div>
-  )
-}
+import { Button, Heading, List, ListItem, Paragraph, Stack } from './utils'
+import { statuses, Status } from './status'
+import { Round1, useGameState } from './game-state'
+import Player from './player-selection'
+import { useState } from 'react'
 
 export default () => {
-  const { gameState } = useGameState()
+  const { gameState } = useGameState<Round1>()
+  type PlayerId = typeof gameState.opponents[number]['id']
+  type StatusCode = Status['id']
 
-  const opponents: { id: string; name: string }[] = []
+  const [assignments, setAssignments] = useState<
+    Record<PlayerId, StatusCode | null>
+  >({})
+
+  const opponents = gameState.opponents
+
+  const isDone = opponents.every((p) => assignments[p.id])
+
+  const onChangePlayerAssignment =
+    (playerId: PlayerId) => (statusCode: StatusCode) => {
+      setAssignments({ ...assignments, [playerId]: statusCode })
+    }
+
   return (
     <Stack>
       <Heading>Round 1</Heading>
@@ -63,11 +35,16 @@ export default () => {
       <List>
         {opponents.map((opponent) => (
           <ListItem key={opponent.id}>
-            <Player {...opponent} />
+            <Player
+              {...opponent}
+              statuses={statuses}
+              value={assignments[opponent.id]}
+              onChange={onChangePlayerAssignment(opponent.id)}
+            />
           </ListItem>
         ))}
       </List>
-      <Button label="Done" />
+      {isDone && <Button label="Done" />}
     </Stack>
   )
 }

@@ -20,11 +20,17 @@ export const Centered: React.FC<{}> = ({ children }) => {
   return <div className="centered">{children}</div>
 }
 
-export const IconButton: React.FC<{ icon: string; label: string }> = ({
-  label,
-}) => {
+export const IconButton: React.FC<{
+  style: 'primary' | 'secondary'
+  icon: string
+  label: string
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+}> = ({ label, style, onClick }) => {
   return (
-    <button className="button">
+    <button
+      className={`button ${style ? `mod-${style}` : ''}`}
+      onClick={onClick}
+    >
       {/* <img src={`${share}#svgView(viewBox(10, 0, 32, 32))`} /> */}
       {label}
     </button>
@@ -64,10 +70,15 @@ interface Option {
 export const Select: React.FC<{
   instructions: string
   options: Option[]
-}> = ({ instructions, options }) => {
+  value: Option['id'] | null
+  onChange: (value: Option['id']) => void
+}> = ({ instructions, options, value, onChange }) => {
   return (
-    <select style={{ fontSize: '16px', maxWidth: '100%' }}>
-      <option disabled hidden>
+    <select
+      style={{ fontSize: '16px', maxWidth: '100%' }}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      <option selected={!value} disabled hidden>
         {instructions}
       </option>
       {options.map((option) => (
