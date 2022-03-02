@@ -1,4 +1,5 @@
-const API = (path: string) => `http://localhost:3001${path}`
+import { API_HOST } from './config'
+const API = (path: string) => `${API_HOST}${path}`
 
 export const postJSON = async (url: string, body: any) => {
   const response = await fetch(API(url), {

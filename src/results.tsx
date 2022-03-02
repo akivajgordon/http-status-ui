@@ -29,8 +29,11 @@ const Player: React.FC<{
         <br />
         <span className="typography mod-small mod-muted">
           Others voted:{' '}
-          {statuses.map((status) => (
-            <strong key={status}>{labelForStatus(status)}</strong>
+          {statuses.map((status, i) => (
+            <>
+              <strong key={status}>{labelForStatus(status)}</strong>
+              {i < statuses.length - 1 && <span>,&nbsp;</span>}
+            </>
           ))}
         </span>
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { API_HOST, WS_HOST } from './config'
 
 interface Player {
   id: string
@@ -68,7 +69,7 @@ export const useGameState = <
   // }, [id])
   useEffect(() => {
     setLoading(true)
-    const ws = new WebSocket(`ws://localhost:3001/${id}`)
+    const ws = new WebSocket(`${WS_HOST}/${id}`)
 
     ws.addEventListener('message', (e) => {
       console.log('data', e.data)
