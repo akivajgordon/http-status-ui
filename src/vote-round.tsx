@@ -1,15 +1,37 @@
 import { Button, Heading, List, ListItem, Paragraph, Stack } from './utils'
-import { statuses } from './status'
+import { Status, statuses } from './status'
 import Player from './player-selection'
-
-const opponents = [
-  { id: '13t3ito', name: 'Akiva', completed: true },
-  { id: '1p3itjo', name: 'Joe', completed: false },
-  { id: 'alkjszi', name: 'Dan', completed: true },
-  { id: 'joivkml', name: 'Adrienne', completed: true },
-]
+import { Round2, useGameState } from './game-state'
+import { useState } from 'react'
+import { postJSON } from './api'
+import { useParams } from 'react-router-dom'
+import VoteRoundWait from './vote-round-wait'
 
 export default () => {
+  const { id: gameId } = useParams()
+  const { gameState } = useGameState<Round2>()
+  const opponents = gameState.opponents
+
+  type PlayerId = typeof gameState.opponents[number]['id']
+  type StatusCode = Status['id']
+
+  const [votes, setVotes] = useState<Record<PlayerId, StatusCode | null>>({})
+
+  const isDone = opponents.every((p) => votes[p.id])
+
+  const onChangePlayerAssignment =
+    (playerId: PlayerId) => (statusCode: StatusCode) => {
+      setVotes({ ...votes, [playerId]: statusCode })
+    }
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    await postJSON(`/votes/${gameId}`, { votes })
+  }
+
+  if (gameState.completed) return <VoteRoundWait />
+
   return (
     <Stack>
       <Heading>Round 2</Heading>
@@ -36,14 +58,18 @@ export default () => {
           <ListItem key={opponent.id}>
             <Player
               {...opponent}
-              statuses={statuses}
-              value={null}
-              onChange={(v) => {}}
+              statuses={statuses.filter((s) => opponent.options.includes(s.id))}
+              value={votes[opponent.id]}
+              onChange={onChangePlayerAssignment(opponent.id)}
             />
           </ListItem>
         ))}
       </List>
-      <Button label="Done" />
+      {isDone && (
+        <form onSubmit={onSubmit}>
+          <Button label="Done" />
+        </form>
+      )}
     </Stack>
   )
 }

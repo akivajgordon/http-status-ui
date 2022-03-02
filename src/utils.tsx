@@ -75,10 +75,11 @@ export const Select: React.FC<{
 }> = ({ instructions, options, value, onChange }) => {
   return (
     <select
-      style={{ fontSize: '16px', maxWidth: '100%' }}
+      style={{ fontSize: '16px', width: '100%' }}
       onChange={(e) => onChange(e.target.value)}
+      value={value || 'instructions'}
     >
-      <option selected={!value} disabled hidden>
+      <option disabled hidden value="instructions">
         {instructions}
       </option>
       {options.map((option) => (

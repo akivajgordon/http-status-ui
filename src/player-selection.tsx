@@ -21,7 +21,8 @@ const Player: React.FC<{
       <div>
         <span
           style={{
-            width: '50px',
+            display: 'inline-block',
+            width: '1ch',
             marginRight: '1em',
             color: '#61D836',
             fontWeight: 'bold',
@@ -31,7 +32,7 @@ const Player: React.FC<{
         </span>
         <span>{name}</span>
       </div>
-      <div style={{ maxWidth: '22ch' }}>
+      <div style={{ width: '22ch' }}>
         <Select
           instructions="Choose status"
           options={statuses.map((s) => ({

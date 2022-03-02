@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { postJSON } from './api'
+import { useGameState } from './game-state'
 import { Stack, Heading, Paragraph, Button, Input, Centered } from './utils'
-
-const HOST = 'Akiva'
 
 export default () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
   const { id } = useParams()
+  const { gameState } = useGameState()
 
   useEffect(() => {
     if (inputRef.current) {
@@ -28,7 +28,8 @@ export default () => {
         <Heading>HTTP Status</Heading>
         <Paragraph>A nerdy party game.</Paragraph>
         <Paragraph>
-          Your host, <strong>{HOST}</strong>, invited you to this game.
+          Your host, <strong>{gameState.host}</strong>, invited you to this
+          game.
         </Paragraph>
       </Stack>
       <Centered>

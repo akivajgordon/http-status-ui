@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 interface Player {
   id: string
   name: string
-  completed: boolean
 }
 
 export enum GameStatus {
@@ -19,13 +18,24 @@ interface GameState {
   joined: boolean
   players: Player[]
   gameStatus: GameStatus
+  host: string
+}
+
+type StatusCode = number
+
+export interface Round2 extends GameState {
+  opponents: (Player & { completed: boolean; options: StatusCode[] })[]
+  completed: boolean
 }
 
 export interface Round1 extends GameState {
-  opponents: Player[]
+  opponents: (Player & { completed: boolean })[]
+  completed: boolean
 }
 
-export const useGameState = <T extends Round1 | GameState = GameState>() => {
+export const useGameState = <
+  T extends Round1 | Round2 | GameState = GameState
+>() => {
   const [gameState, setGameState] = useState<T>({
     isHost: false,
     joined: false,

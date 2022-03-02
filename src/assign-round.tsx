@@ -3,8 +3,12 @@ import { statuses, Status } from './status'
 import { Round1, useGameState } from './game-state'
 import Player from './player-selection'
 import { useState } from 'react'
+import { postJSON } from './api'
+import { useParams } from 'react-router-dom'
+import AssignRoundWait from './assign-round-wait'
 
 export default () => {
+  const { id: gameId } = useParams()
   const { gameState } = useGameState<Round1>()
   type PlayerId = typeof gameState.opponents[number]['id']
   type StatusCode = Status['id']
@@ -21,6 +25,14 @@ export default () => {
     (playerId: PlayerId) => (statusCode: StatusCode) => {
       setAssignments({ ...assignments, [playerId]: statusCode })
     }
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    await postJSON(`/assignments/${gameId}`, { assignments })
+  }
+
+  if (gameState.completed) return <AssignRoundWait />
 
   return (
     <Stack>
@@ -44,7 +56,11 @@ export default () => {
           </ListItem>
         ))}
       </List>
-      {isDone && <Button label="Done" />}
+      {isDone && (
+        <form onSubmit={onSubmit}>
+          <Button label="Done" />
+        </form>
+      )}
     </Stack>
   )
 }
