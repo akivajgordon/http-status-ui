@@ -1,26 +1,20 @@
 import { Heading, List, ListItem, Stack } from './utils'
 import { labelForStatus } from './status'
+import { Finished, useGameState } from './game-state'
 
 interface Player {
   id: string
   name: string
   score: number
-  status: number
+  statuses: number[]
 }
-
-const players: Player[] = [
-  { id: '13t3ito', name: 'Akiva', score: 6, status: 401 },
-  { id: '1p3itjo', name: 'Joe', score: 5, status: 303 },
-  { id: 'alkjszi', name: 'Dan', score: 3, status: 502 },
-  { id: 'joivkml', name: 'Adrienne', score: 2, status: 504 },
-]
 
 const Player: React.FC<{
   id: string
   name: string
   score: number
-  status: number
-}> = ({ name, status, score }) => {
+  statuses: number[]
+}> = ({ name, statuses, score }) => {
   return (
     <div
       style={{
@@ -34,7 +28,10 @@ const Player: React.FC<{
         <span>{name}</span>
         <br />
         <span className="typography mod-small mod-muted">
-          Others voted: <strong>{labelForStatus(status)}</strong>
+          Others voted:{' '}
+          {statuses.map((status) => (
+            <strong key={status}>{labelForStatus(status)}</strong>
+          ))}
         </span>
       </div>
       <strong>{score}</strong>
@@ -52,39 +49,18 @@ interface Winner extends Player {
   assignments: Assignment[]
 }
 
-const winners: Winner[] = [
-  {
-    id: 'lkmweaq',
-    name: 'Matt',
-    score: 7,
-    status: 200,
-    assignments: [
-      { id: '1iwejoiw', name: 'Mary Anne', status: 401 },
-      { id: 'oijlsqq', name: 'Roger', status: 501 },
-      { id: 'oiwejoiw', name: 'Joe', status: 301 },
-      { id: 'oixlsqq', name: 'Andrei', status: 101 },
-    ],
-  },
-  {
-    id: '39hunoj',
-    name: 'Michael',
-    score: 7,
-    status: 201,
-    assignments: [
-      { id: 'oilejoiw', name: 'Mary Anne', status: 301 },
-      { id: 'oijlsqq', name: 'Roger', status: 101 },
-      { id: 'oiwejoiw', name: 'Joe', status: 304 },
-      { id: 'oijpsqq', name: 'Andrei', status: 201 },
-    ],
-  },
-]
-
-const Winner: React.FC<Winner> = ({ id, name, score, status, assignments }) => {
+const Winner: React.FC<Winner> = ({
+  id,
+  name,
+  score,
+  statuses,
+  assignments,
+}) => {
   return (
     <Stack>
       <List>
         <div style={{ background: 'gold' }}>
-          <Player id={id} name={name} score={score} status={status} />
+          <Player id={id} name={name} score={score} statuses={statuses} />
         </div>
       </List>
       <div className="typography mod-small" style={{ padding: '0 1em' }}>
@@ -107,6 +83,10 @@ const Winner: React.FC<Winner> = ({ id, name, score, status, assignments }) => {
 }
 
 export default () => {
+  const { gameState } = useGameState<Finished>()
+
+  const { winners, players } = gameState
+
   return (
     <Stack>
       <Heading>And the winner is...</Heading>

@@ -33,8 +33,24 @@ export interface Round1 extends GameState {
   completed: boolean
 }
 
+interface PlayerResult extends Player {
+  score: number
+  statuses: StatusCode[]
+}
+
+export interface Finished extends GameState {
+  players: PlayerResult[]
+  winners: (PlayerResult & {
+    assignments: {
+      id: Player['id']
+      name: Player['name']
+      status: StatusCode
+    }[]
+  })[]
+}
+
 export const useGameState = <
-  T extends Round1 | Round2 | GameState = GameState
+  T extends Round1 | Round2 | Finished | GameState = GameState
 >() => {
   const [gameState, setGameState] = useState<T>({
     isHost: false,
@@ -42,6 +58,7 @@ export const useGameState = <
     players: [],
     gameStatus: GameStatus.Created,
     opponents: [],
+    winners: [],
   } as unknown as T)
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
