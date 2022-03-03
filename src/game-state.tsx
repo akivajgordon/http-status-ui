@@ -64,9 +64,6 @@ export const useGameState = <
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
 
-  // useEffect(() => {
-  //   fetchJSON({ url: backend(`/games/${id}`) }).then((s) => setGameState(s))
-  // }, [id])
   useEffect(() => {
     setLoading(true)
     const ws = new WebSocket(`${WS_HOST}/${id}`)

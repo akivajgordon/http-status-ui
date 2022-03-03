@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom'
 import { postJSON } from './api'
 import { useGameState } from './game-state'
 import { Stack, Heading, Paragraph, Button, Input, Centered } from './utils'
+import Lobby from './lobby'
 
 export default () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
+  const [submitted, setSubmitted] = useState(false)
   const { id } = useParams()
   const { gameState } = useGameState()
 
@@ -18,9 +20,12 @@ export default () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSubmitted(true)
 
     await postJSON(`/join/${id}`, { name })
   }
+
+  if (submitted) return <Lobby />
 
   return (
     <Stack>
