@@ -5,7 +5,7 @@ import { useGameState } from './game-state'
 import { Stack, Heading, Paragraph, Button, Input, Centered } from './utils'
 import Lobby from './lobby'
 
-export default () => {
+const Join: React.FC<{ refreshData(): void }> = ({ refreshData }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -23,6 +23,8 @@ export default () => {
     setSubmitted(true)
 
     await postJSON(`/join/${id}`, { name })
+
+    refreshData()
   }
 
   if (submitted) return <Lobby />
@@ -57,3 +59,5 @@ export default () => {
     </Stack>
   )
 }
+
+export default Join

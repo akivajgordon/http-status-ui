@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { API_HOST, WS_HOST } from './config'
+import { WS_HOST } from './config'
 
 interface Player {
   id: string
@@ -62,6 +62,7 @@ export const useGameState = <
     winners: [],
   } as unknown as T)
   const [loading, setLoading] = useState(true)
+  const [refreshDataToken, setRefreshDataToken] = useState(Date.now())
   const { id } = useParams()
 
   useEffect(() => {
@@ -75,7 +76,11 @@ export const useGameState = <
     })
 
     return () => ws.close()
-  }, [id])
+  }, [id, refreshDataToken])
 
-  return { gameState, loading }
+  return {
+    gameState,
+    loading,
+    refreshData: () => setRefreshDataToken(Date.now()),
+  }
 }

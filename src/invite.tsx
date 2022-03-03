@@ -16,7 +16,7 @@ import {
 const SHARE_ICON = 'share'
 const SHARE_LABEL = 'Copy shareable link to clipboard'
 
-export default () => {
+const Invite: React.FC<{ refreshData(): void }> = ({ refreshData }) => {
   const { id } = useParams()
   const { gameState } = useGameState()
   const { players: joinedPlayers } = gameState
@@ -27,6 +27,8 @@ export default () => {
     e.preventDefault()
 
     await postJSON(`/start/${id}`, {})
+
+    refreshData()
   }
 
   const onShareClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -78,3 +80,5 @@ export default () => {
     </Stack>
   )
 }
+
+export default Invite

@@ -54,16 +54,22 @@ export default () => {
         </a>
       </Paragraph>
       <List>
-        {opponents.map((opponent) => (
-          <ListItem key={opponent.id}>
-            <Player
-              {...opponent}
-              statuses={statuses.filter((s) => opponent.options.includes(s.id))}
-              value={votes[opponent.id]}
-              onChange={onChangePlayerAssignment(opponent.id)}
-            />
-          </ListItem>
-        ))}
+        {opponents
+          .sort((opponent, other) =>
+            opponent.name.toLowerCase().localeCompare(other.name.toLowerCase())
+          )
+          .map((opponent) => (
+            <ListItem key={opponent.id}>
+              <Player
+                {...opponent}
+                statuses={statuses.filter((s) =>
+                  opponent.options.includes(s.id)
+                )}
+                value={votes[opponent.id]}
+                onChange={onChangePlayerAssignment(opponent.id)}
+              />
+            </ListItem>
+          ))}
       </List>
       {isDone && (
         <form onSubmit={onSubmit}>

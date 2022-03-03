@@ -7,7 +7,7 @@ import VoteRound from './vote-round'
 import Results from './results'
 
 export default () => {
-  const { gameState, loading } = useGameState()
+  const { gameState, loading, refreshData } = useGameState()
 
   if (loading) {
     return <span>Loading...</span>
@@ -27,14 +27,14 @@ export default () => {
 
   if (gameState.gameStatus === GameStatus.Created) {
     if (gameState.isHost) {
-      return <Invite />
+      return <Invite refreshData={refreshData} />
     }
 
     if (gameState.joined) {
       return <Lobby />
     }
 
-    return <Join />
+    return <Join refreshData={refreshData} />
   }
 
   return <div>Something is wrong</div>
