@@ -163,6 +163,16 @@ a {
 
 @media (prefers-color-scheme: dark) {
   .typography.mod-muted {
-    color: hsla(0, 0%, 100%, 0.5);
+    color: hsla(0, 0%, 100%, 0.7);
+  }
+}
+
+.winner-highlight {
+  background: gold;
+}
+
+@media (prefers-color-scheme: dark) {
+  .winner-highlight {
+    background: orange;
   }
 }

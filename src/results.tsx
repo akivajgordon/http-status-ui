@@ -62,7 +62,7 @@ const Winner: React.FC<Winner> = ({
   return (
     <Stack>
       <List>
-        <div style={{ background: 'gold' }}>
+        <div className="winner-highlight">
           <Player id={id} name={name} score={score} statuses={statuses} />
         </div>
       </List>
