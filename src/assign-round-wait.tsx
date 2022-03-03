@@ -1,4 +1,4 @@
-import { Button, Heading, Paragraph, Stack } from './utils'
+import { Heading, Paragraph, Stack } from './utils'
 
 export default () => {
   return (
@@ -9,11 +9,6 @@ export default () => {
         1.
       </Paragraph>
       <Paragraph>Need another beer already? No judging here...</Paragraph>
-      <Paragraph>
-        If you need to go back and make a change, now would be a good time.
-      </Paragraph>
-
-      <Button style="secondary" label="I need to make a change" />
     </Stack>
   )
 }
