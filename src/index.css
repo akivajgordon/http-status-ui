@@ -13,12 +13,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   color-scheme: light dark;
-  background: #222;
+  color: black;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
     color: white;
+    background: #222;
   }
 }
 
